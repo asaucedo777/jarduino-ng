@@ -1,0 +1,37 @@
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <img width="40" alt="Angular Logo"
+       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
+  <span>{{ this.title }}</span>
+  <div class="spacer"></div>
+</div>
+
+<div class="content" role="main">
+  <h1 *ngIf="this.scheduled == '1'">¿Programado? SI</h1>
+  <h1 *ngIf="this.scheduled != '1'">¿Programado? NO</h1>
+  <button *ngIf="this.scheduled == '1'" (click)="switchScheduled()">Desactivar programación</button>
+  <button *ngIf="this.scheduled != '1'" (click)="switchScheduled()">Activar programación</button>
+
+  <table>
+    <thead>
+      <th>Pin</th>
+      <th>Status</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Action</th>
+    </thead>
+    <tr *ngFor="let item of pines">
+      <td>{{ item.pin }}</td>
+      <td>{{ item.status }}</td>
+      <td>{{ item.start0 | date:'yyyy-M-dd hh:mm:ss' }}</td>
+      <td>{{ item.end0 | date:'yyyy-M-dd hh:mm:ss' }}</td>
+      <td>
+        <button *ngIf="item.status === 0"
+                (click)="activar(item.pin)">Activar</button>
+        <button *ngIf="item.status === 1"
+                (click)="desactivar(item.pin)">Desactivar</button>
+      </td>
+    </tr>
+  </table>
+
+</div>
