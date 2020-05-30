@@ -27,7 +27,7 @@ p {
 
 .toolbar {
   height: 60px;
-  margin: -8px;
+  margin: 0px;
   display: flex;
   align-items: center;
   background-color: #1976d2;
@@ -283,3 +283,6 @@ svg#clouds {
     visibility: hidden;
   }
 }
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
