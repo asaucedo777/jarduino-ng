@@ -1,37 +1,45 @@
-<!-- Toolbar -->
-<div class="toolbar" role="banner">
-  <img width="40" alt="Angular Logo"
-       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
-  <span>{{ this.title }}</span>
-  <div class="spacer"></div>
+<div>
+  <span>Título: {{ this.title }}</span>
 </div>
 
-<div class="content" role="main">
-  <h1 *ngIf="this.scheduled == '1'">¿Programado? SI</h1>
-  <h1 *ngIf="this.scheduled != '1'">¿Programado? NO</h1>
-  <button *ngIf="this.scheduled == '1'" (click)="switchScheduled()">Desactivar programación</button>
-  <button *ngIf="this.scheduled != '1'" (click)="switchScheduled()">Activar programación</button>
-
-  <table>
-    <thead>
-      <th>Pin</th>
-      <th>Status</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Action</th>
-    </thead>
-    <tr *ngFor="let item of pines">
-      <td>{{ item.pin }}</td>
-      <td>{{ item.status }}</td>
-      <td>{{ item.start0 | date:'yyyy-M-dd hh:mm:ss' }}</td>
-      <td>{{ item.end0 | date:'yyyy-M-dd hh:mm:ss' }}</td>
-      <td>
-        <button *ngIf="item.status === 0"
-                (click)="activar(item.pin)">Activar</button>
-        <button *ngIf="item.status === 1"
-                (click)="desactivar(item.pin)">Desactivar</button>
-      </td>
-    </tr>
-  </table>
-
-</div>
+<p>Hora esp8266:
+  {{this.esp8266Time.getTime()}} - {{ this.esp8266Time | date:'yyyy-MM-dd hh:mm:ss':'+0100' }}</p>
+<p>¿Programado? <input ngbButtonLabel class="btn-primary" type="button"
+         [value]="scheduled" (click)="switchScheduled()"></p>
+<table>
+  <thead>
+    <th>Pin</th>
+    <th>Descripción</th>
+    <th>Activado</th>
+    <th *ngIf="scheduled">Start</th>
+    <th *ngIf="scheduled">End</th>
+  </thead>
+  <tr>
+    <td>{{ '' }}</td>
+    <td>{{ 'LED_BUILTIN' }}</td>
+    <td>
+      <input ngbButtonLabel class="btn-primary" type="button"
+             [value]="scheduled" [disabled]="true">
+    </td>
+    <td *ngIf="scheduled">{{ '' }}</td>
+    <td *ngIf="scheduled">{{ '' }}</td>
+  </tr>
+  <tr *ngFor="let item of pines">
+    <td>{{ item.pin }}</td>
+    <td>{{ item.description }}</td>
+    <td>
+      <input ngbButtonLabel class="btn-primary" type="button"
+             [value]="item.status == 1" (click)="this.switch(item.pin)">
+    </td>
+    <td *ngIf="scheduled">
+      {{item.start0.getTime()}}<ngb-timepicker [(ngModel)]="item.start0"></ngb-timepicker>
+    </td>
+    <td *ngIf="scheduled">
+      <ngb-timepicker [(ngModel)]="item.end0"></ngb-timepicker>
+    </td>
+    <td>
+      <input ngbButtonLabel class="btn-primary" type="button"
+             value="Programar" (click)="this.pinUpdate(item.pin)">
+    </td>
+  </tr>
+</table>

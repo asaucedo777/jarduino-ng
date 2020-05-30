@@ -1,22 +1,36 @@
 export interface IPin {
   pin: number;
+  description: string;
   status: number;
   start0: Date;
   end0: Date;
+  result?: string;
 }
+
 export class Pin implements IPin {
   pin: number;
+  description: string;
   status: number;
   start0: Date;
   end0: Date;
+  result: string;
   constructor(data: IPin = null) {
+    let retorno = null;
     if (data) {
-      return Object.assign(this, data);
+      retorno = Object.assign(this, data);
+      retorno.start0 = new Date(retorno.start0 * 1000);
+      retorno.end0 = new Date(retorno.end0 * 1000);
     } else {
-      this.pin = -1;
-      this.status = -1;
-      this.start0 = null;
-      this.end0 = null;
+      retorno = Object.assign(this, {
+        pin: -1,
+        description: "",
+        status: -1,
+        start0: new Date(0),
+        end0: new Date(0),
+        result: null
+      });
     }
+    return retorno;
   }
+  // TODO bindModel Dates
 }
