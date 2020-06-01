@@ -3,7 +3,8 @@
 </div>
 
 <p>Hora esp8266:
-  {{this.esp8266Time.getTime()}} - {{ this.esp8266Time | date:'yyyy-MM-dd hh:mm:ss':'+0100' }}</p>
+  {{(this.esp8266Time.getTime() - 1590969600000) / 1000}} -
+  {{ this.esp8266Time | date:'yyyy-MM-dd HH:mm:ss':'+0000' }}</p>
 <p>¿Programado? <input ngbButtonLabel class="btn-primary" type="button"
          [value]="scheduled" (click)="switchScheduled()"></p>
 <table>
@@ -32,14 +33,16 @@
              [value]="item.status == 1" (click)="this.switch(item.pin)">
     </td>
     <td *ngIf="scheduled">
-      {{item.start0.getTime()}}<ngb-timepicker [(ngModel)]="item.start0"></ngb-timepicker>
+      {{item.start0 / 1000 }} - {{ item.start0 | date:'yyyy-MM-dd HH:mm:ss':'+0000' }}
+      <ngb-timepicker [(ngModel)]="item.start0" [seconds]="true"></ngb-timepicker>
     </td>
     <td *ngIf="scheduled">
-      <ngb-timepicker [(ngModel)]="item.end0"></ngb-timepicker>
+      {{item.end0 / 1000 }} - {{ item.end0 | date:'yyyy-MM-dd HH:mm:ss':'+0000' }}
+      <ngb-timepicker [(ngModel)]="item.end0" [seconds]="true"></ngb-timepicker>
     </td>
     <td>
-      <input ngbButtonLabel class="btn-primary" type="button"
-             value="Programar" (click)="this.pinUpdate(item.pin)">
+      <input ngbButtonLabel class="btn-primary" type="button" value="Programar"
+             (click)="this.pinUpdate(item.pin)">
     </td>
   </tr>
 </table>

@@ -35,8 +35,15 @@ export class Esp8266Service {
   public digitalPinGet(pin: number): Observable<Pin> {
     return this.httpClient.get<Pin>(environment.API_URL + '/DIGITAL_PIN_GET?pin=' + pin);
   }
-  public digitalPinPost(pinData: Pin): Observable<Pin> {
-    return this.httpClient.post<Pin>(environment.API_URL + '/DIGITAL_PIN_POST', pinData);
+  public digitalPinPost(pinData: string): Observable<Pin> {
+    let headers = {
+      // "Access-Control-Allow-Origin": "*",
+      "Content-type": "application/x-www-form-urlencoded",
+    };
+    let options = {
+      headers: headers
+    }
+    return this.httpClient.post<Pin>(environment.API_URL + '/DIGITAL_PIN_POST', pinData, options);
   }
   public digitalPinStatus(pin: number): Observable<any> {
     return this.httpClient.get(environment.API_URL + '/DIGITAL_PIN/STATUS?pin=' + pin);

@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   constructor(public esp8266Service: Esp8266Service) {
     this.pines = new Array<Pin>();
     this.pin = new Pin();
+    this.esp8266Time = new Date();
   }
   ngOnInit(): void {
     this.getTest();
@@ -61,7 +62,7 @@ export class AppComponent implements OnInit {
         });
   }
   public pinUpdate(pin: number) {
-    this.esp8266Service.digitalPinPost(this.pines[pin])
+    this.esp8266Service.digitalPinPost(this.bind(this.pines[pin]))
       .subscribe(
         response => {
           console.log(response);
@@ -137,5 +138,10 @@ export class AppComponent implements OnInit {
       })
     }
     console.log(this.pines);
+  }
+  private bind(pin: Pin) : string {
+    let retorno = `pin=${pin.pin}&start0=${pin.start0 / 1000}&end0=${pin.end0 / 1000}`;
+    console.log(retorno);
+    return retorno;
   }
 }

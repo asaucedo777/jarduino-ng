@@ -7,7 +7,7 @@ import { NgbModule, NgbTimeAdapter } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { Esp8266Service } from './esp8266.service';
-import { NgbTimeDateAdapter } from './date-picker.adapter';
+import { NgbNumberAdapter } from './number-picker.adapter';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { NgbTimeDateAdapter } from './date-picker.adapter';
   ],
   providers: [
     Esp8266Service,
-    { provide: NgbTimeAdapter, useClass: NgbTimeDateAdapter },
+    { provide: NgbTimeAdapter, useClass: NgbNumberAdapter },
   ],
   bootstrap: [AppComponent]
 })
