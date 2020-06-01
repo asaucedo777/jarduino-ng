@@ -1,30 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { Esp8266Service } from './esp8266.service';
 import { Pin } from './pin.model';
+import { timer } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title: string;
   scheduled: boolean;
   ledBuiltin: string;
   pines: Array<Pin>;
   pin: Pin;
   esp8266Time: Date;
+  alive: boolean;
   constructor(public esp8266Service: Esp8266Service) {
     this.pines = new Array<Pin>();
     this.pin = new Pin();
     this.esp8266Time = new Date();
   }
   ngOnInit(): void {
+    this.alive = true;
     this.getTest();
     this.getTime();
     this.getScheduled();
     this.getLedBuiltinStatus();
     this.getPines();
+  }
+  ngOnDestroy(): void {
+    this.alive = false;
   }
 
   public switchScheduled() {
@@ -88,13 +96,7 @@ export class AppComponent implements OnInit {
   private getTime() {
     this.esp8266Service.getTime()
       .subscribe(
-        response => {
-          console.log(response);
-          this.esp8266Time = new Date(response.time * 1000);
-        },
-        (error: any) => {
-          console.log(error)
-        });
+        this.setTime, this.setError);
   }
   private getScheduled() {
     this.esp8266Service.scheduledGet()
@@ -130,6 +132,13 @@ export class AppComponent implements OnInit {
         });
   }
 
+  private setTime(response: any) {
+    console.log(response);
+    this.esp8266Time = new Date(response.time * 1000);
+  }
+  private setError(error: any) {
+    console.log(error);
+  }
   private setearPines(pines: Array<Pin>) {
     this.pines = [];
     if (pines) {
@@ -139,7 +148,7 @@ export class AppComponent implements OnInit {
     }
     console.log(this.pines);
   }
-  private bind(pin: Pin) : string {
+  private bind(pin: Pin): string {
     let retorno = `pin=${pin.pin}&start0=${pin.start0 / 1000}&end0=${pin.end0 / 1000}`;
     console.log(retorno);
     return retorno;
