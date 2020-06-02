@@ -19,9 +19,8 @@ export class NgbNumberAdapter extends NgbTimeAdapter<number> {
 
   toModel(time: NgbTimeStruct | null): number | null {
     if (time) {
-      let value = new Date(1970, 0, 0,
-        time.hour, time.minute, time.second, 0);
-      return value.getTime() + 90000000;
+      let value = new Date(time.hour * 60 * 60000 + time.minute * 60000 + time.second * 1000);
+      return value.getTime();
     } else {
       return null;
     }
