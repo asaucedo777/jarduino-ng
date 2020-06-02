@@ -22,16 +22,17 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(public esp8266Service: Esp8266Service) {
     this.pines = new Array<Pin>();
     this.pin = new Pin();
+    // Quitamos ms y truncamos la fecha
     this.now = (Math.trunc((new Date()).getTime() / 1000) * 1000) % ONE_DAY;
     this.esp8266Time = 0;
   }
   ngOnInit(): void {
     this.alive = true;
     this.getTest();
-    this.getTime();
     this.getScheduled();
     this.getLedBuiltinStatus();
     this.getPines();
+    this.getTime();
   }
   ngOnDestroy(): void {
     this.alive = false;
@@ -46,29 +47,32 @@ export class AppComponent implements OnInit, OnDestroy {
         },
         error => console.log(error)
       );
+    this.getTime();
   }
   public switchLedBuiltin() {
     this.esp8266Service.ledBuiltinSwitch()
-      .subscribe(
-        response => this.ledBuiltin = response.ledBuiltin == '1' ? '0' : '1',
-        error => console.log(error)
+    .subscribe(
+      response => this.ledBuiltin = response.ledBuiltin == '1' ? '0' : '1',
+      error => console.log(error)
       );
+    this.getTime();
   }
   public switch(pin: number) {
     this.esp8266Service.digitalPinSwitch(pin)
-      .subscribe(
-        response => this.getPines(),
-        error => console.log(error)
+    .subscribe(
+      response => this.getPines(),
+      error => console.log(error)
       );
+    this.getTime();
   }
   public pinUpdate(pin: number) {
     this.esp8266Service.digitalPinPost(this.bind(this.pines[pin]))
-      .subscribe(
-        response => this.getPines(),
-        error => console.log(error)
+    .subscribe(
+      response => this.getPines(),
+      error => console.log(error)
       );
+    this.getTime();
   }
-
 
   private getTest() {
     this.esp8266Service.test()
@@ -81,7 +85,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.esp8266Service.getTime()
       .subscribe(
         response => this.esp8266Time = response.time * 1000,
-        this.setError
+        error => console.log(error)
       );
   }
   private getScheduled() {
@@ -105,10 +109,6 @@ export class AppComponent implements OnInit, OnDestroy {
         error => console.log(error)
       );
   }
-
-  private setError(error: any) {
-    console.log(error);
-  }
   private setearPines(pines: Array<Pin>) {
     this.pines = [];
     if (pines) {
@@ -119,7 +119,7 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log(this.pines);
   }
   private bind(pin: Pin): string {
-    let retorno = `pin=${pin.pin}&start0=${pin.start0 / 1000}&end0=${pin.end0 / 1000}`;
+    let retorno = `pin=${pin.pin}&start0=${pin.start0 / 1000}&start1=${pin.start1 / 1000}&duration0=${pin.duration0}&duration1=${pin.duration1}`;
     console.log(retorno);
     return retorno;
   }

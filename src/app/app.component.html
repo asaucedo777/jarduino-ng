@@ -2,7 +2,7 @@
   <span>Título: {{ this.title }}</span>
 </div>
 
-<p>Hora esp8266:
+<p>Ultima actualización esp8266:
   {{ this.esp8266Time | date:'HH:mm:ss':'+0000' }}</p>
 
 <p>¿Programado? <input ngbButtonLabel class="btn-primary" type="button"
@@ -12,8 +12,10 @@
     <th>Pin</th>
     <th>Descripción</th>
     <th>Activado</th>
-    <th *ngIf="scheduled">Start</th>
-    <th *ngIf="scheduled">End</th>
+    <th *ngIf="scheduled">Start1</th>
+    <th *ngIf="scheduled">Duration1</th>
+    <th *ngIf="scheduled">Start2</th>
+    <th *ngIf="scheduled">Duration2</th>
   </thead>
   <tr>
     <td>{{ '' }}</td>
@@ -24,23 +26,38 @@
     </td>
     <td *ngIf="scheduled">{{ '' }}</td>
     <td *ngIf="scheduled">{{ '' }}</td>
+    <td *ngIf="scheduled">{{ '' }}</td>
+    <td *ngIf="scheduled">{{ '' }}</td>
   </tr>
   <tr *ngFor="let item of pines">
     <td>{{ item.pin }}</td>
     <td>{{ item.description }}</td>
     <td>
       <input ngbButtonLabel class="btn-primary" type="button"
-             [value]="item.status == 1" (click)="this.switch(item.pin)">
+             [value]="item.status == 1" (click)="this.switch(item.pin)"
+             [disabled]="item.disabled">
     </td>
     <td *ngIf="scheduled">
-      <ngb-timepicker [(ngModel)]="item.start0" [seconds]="true"></ngb-timepicker>
+      <ngb-timepicker [(ngModel)]="item.start0" [seconds]="true"
+                      [disabled]="item.disabled">
+      </ngb-timepicker>
     </td>
     <td *ngIf="scheduled">
-      <ngb-timepicker [(ngModel)]="item.end0" [seconds]="true"></ngb-timepicker>
+      <input class="form-control" type="text" [(ngModel)]="item.duration0"
+             [disabled]="item.disabled">
+    </td>
+    <td *ngIf="scheduled">
+      <ngb-timepicker [(ngModel)]="item.start1" [seconds]="true"
+                      [disabled]="item.disabled">
+      </ngb-timepicker>
+    </td>
+    <td *ngIf="scheduled">
+      <input class="form-control" type="text" [(ngModel)]="item.duration1"
+             [disabled]="item.disabled">
     </td>
     <td>
       <input ngbButtonLabel class="btn-primary" type="button" value="Programar"
-             (click)="this.pinUpdate(item.pin)">
+             (click)="this.pinUpdate(item.pin)" [disabled]="item.disabled">
     </td>
   </tr>
 </table>
