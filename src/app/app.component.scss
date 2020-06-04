@@ -1,0 +1,104 @@
+.app {
+  background-color: blue;
+  &__title {
+    background-color: #ab6131;
+    display: flex;
+    justify-content: space-between;
+    &-logo {
+      background-color: greenyellow;
+      vertical-align: middle;
+      box-shadow: 5px 5px 5px 2px black;
+      margin: 5px;
+      border-radius: 5px;
+      padding: 5px;
+      height: 35px;
+    }
+    &-time {
+      background-color: #ab6131;
+    }
+  }
+  &__switch {
+    background-color: darkgreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    display: flex;
+  }
+  &__contain {
+    background-color: green;
+    &-pin {
+      background-color: white;
+      padding: 10px 10px;
+      margin: 10px 10px;
+      border: 5px solid #000000;
+      border-radius: 20px;
+      &-title {
+        background-color: white;
+      }
+      &-group1 {
+        background-color: white;
+        display: flex;
+        &-picker {
+          padding: 0px 5px 5px 5px;
+          background-color: white;
+          margin: 0px 5px 5px 5px;
+          &-slider {
+            display: flex;
+          }
+        }
+        &-switch {
+          margin: 5px 0px 5px 0px;
+          width: 100px;
+          height: 100px;
+          border-radius: 50px;
+          background-color: #585151;
+          display: flex;
+          justify-content: center;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+      &-slider1 {
+        background-color: gray;
+        padding: 10px 20px 10px 60px;
+      }
+      &-group2 {
+        background-color: white;
+        display: flex;
+        &-picker {
+          padding: 0px 5px 5px 5px;
+          background-color: white;
+          margin: 0px 5px 5px 5px;
+          &-slider {
+            display: flex;
+          }
+        }
+        &-switch {
+          margin: 5px 0px 5px 0px;
+          width: 100px;
+          height: 100px;
+          border-radius: 50px;
+          background-color: white;
+          display: flex;
+          justify-content: center;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+      &-slider2 {
+        background-color: gray;
+        padding: 10px 20px 10px 60px;
+      }
+    }
+  }
+}
+
+.disabled_button {
+  background-image: url("src/assets/boton-de-encendido-disabled.svg");
+}
+.on_button {
+  background-image: url("src/assets/boton-de-encendido-verde.svg");
+}
+.off_button {
+  background-image: url("src/assets/boton-de-encendido-rojo.svg");
+}

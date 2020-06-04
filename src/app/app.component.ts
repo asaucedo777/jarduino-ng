@@ -19,6 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
   esp8266Time: number;
   now: number;
   alive: boolean;
+
   constructor(public esp8266Service: Esp8266Service) {
     this.pines = new Array<Pin>();
     this.pin = new Pin();
@@ -123,4 +124,5 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log(retorno);
     return retorno;
   }
+
 }

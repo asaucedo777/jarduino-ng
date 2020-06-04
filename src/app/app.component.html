@@ -1,63 +1,57 @@
-<div>
-  <span>Título: {{ this.title }}</span>
-</div>
-
-<p>Ultima actualización esp8266:
-  {{ this.esp8266Time | date:'HH:mm:ss':'+0000' }}</p>
-
-<p>¿Programado? <input ngbButtonLabel class="btn-primary" type="button"
-         [value]="scheduled" (click)="switchScheduled()"></p>
-<table>
-  <thead>
-    <th>Pin</th>
-    <th>Descripción</th>
-    <th>Activado</th>
-    <th *ngIf="scheduled">Start1</th>
-    <th *ngIf="scheduled">Duration1</th>
-    <th *ngIf="scheduled">Start2</th>
-    <th *ngIf="scheduled">Duration2</th>
-  </thead>
-  <tr>
-    <td>{{ '' }}</td>
-    <td>{{ 'LED_BUILTIN' }}</td>
-    <td>
-      <input ngbButtonLabel class="btn-primary" type="button"
-             [value]="scheduled" [disabled]="true">
-    </td>
-    <td *ngIf="scheduled">{{ '' }}</td>
-    <td *ngIf="scheduled">{{ '' }}</td>
-    <td *ngIf="scheduled">{{ '' }}</td>
-    <td *ngIf="scheduled">{{ '' }}</td>
-  </tr>
-  <tr *ngFor="let item of pines">
-    <td>{{ item.pin }}</td>
-    <td>{{ item.description }}</td>
-    <td>
-      <input ngbButtonLabel class="btn-primary" type="button"
-             [value]="item.status == 1" (click)="this.switch(item.pin)"
-             [disabled]="item.disabled">
-    </td>
-    <td *ngIf="scheduled">
-      <ngb-timepicker [(ngModel)]="item.start0" [seconds]="true"
-                      [disabled]="item.disabled">
-      </ngb-timepicker>
-    </td>
-    <td *ngIf="scheduled">
-      <input class="form-control" type="text" [(ngModel)]="item.duration0"
-             [disabled]="item.disabled">
-    </td>
-    <td *ngIf="scheduled">
-      <ngb-timepicker [(ngModel)]="item.start1" [seconds]="true"
-                      [disabled]="item.disabled">
-      </ngb-timepicker>
-    </td>
-    <td *ngIf="scheduled">
-      <input class="form-control" type="text" [(ngModel)]="item.duration1"
-             [disabled]="item.disabled">
-    </td>
-    <td>
-      <input ngbButtonLabel class="btn-primary" type="button" value="Programar"
+<div class="app">
+  <div class="app__title">
+    <div class="app__title-logo">DOMOGARDEN</div>
+    <div class="app__title-time">
+      {{ this.esp8266Time | date:'HH:mm:ss':'+0000' }}
+    </div>
+  </div>
+  <div class="app__switch btn-group btn-group-toggle" ngbRadioGroup
+       name="radioBasic" [(ngModel)]="scheduled">
+    <label class="btn-primary" ngbButtonLabel >
+      <input type="radio" ngbButton [value]="false"
+             (change)="switchScheduled()">Manual
+    </label>
+    <label class="btn-primary" ngbButtonLabel >
+      <input type="radio" ngbButton [value]="true"
+             (change)="switchScheduled()">Programado
+    </label>
+  </div>
+  <div class="app__contain-pin" *ngFor="let item of pines">
+    <div class="app__contain-pin-title"> PIN: D{{ item.pin }} -
+      {{ item.description }}</div>
+    <div class="app__contain-pin-group1">
+      <div class="app__contain-pin-group1-switch"
+           [ngClass]="item.disabled || scheduled ? 'disabled_button' : item.status == 1 ? 'on_button' : 'off_button'"
+           (click)="this.switch(item.pin)">
+      </div>
+      <div class="app__contain-pin-group1-picker" *ngIf="scheduled">
+        <ngb-timepicker [(ngModel)]="item.start0" [seconds]="true"
+                        [disabled]="item.disabled">
+        </ngb-timepicker>
+        <p-inputNumber [(ngModel)]="item.duration0" [min]="0" [max]="300">
+        </p-inputNumber>
+        <p-slider [(ngModel)]="item.duration0" [disabled]="item.disabled"
+                  [min]="0" [max]="300" [animate]="true">
+        </p-slider>
+      </div>
+    </div>
+    <div class="app__contain-pin-group2" *ngIf="scheduled">
+      <div class="app__contain-pin-group2-switch">
+      </div>
+      <div class="app__contain-pin-group2-picker">
+        <ngb-timepicker [(ngModel)]="item.start0" [seconds]="true"
+                        [disabled]="item.disabled">
+        </ngb-timepicker>
+        <p-inputNumber [(ngModel)]="item.duration0" [min]="0" [max]="300">
+        </p-inputNumber>
+        <p-slider [(ngModel)]="item.duration0" [disabled]="item.disabled"
+                  [min]="0" [max]="300" [animate]="true">
+        </p-slider>
+      </div>
+    </div>
+    <div class="app__contain-pin2-update" *ngIf="scheduled">
+      <input ngbButtonLabel type="button" value="Programar"
              (click)="this.pinUpdate(item.pin)" [disabled]="item.disabled">
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+</div>

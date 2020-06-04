@@ -1,0 +1,209 @@
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+/* Slider styles */
+body .ui-slider {
+  background-color: #c4c4c4;
+  border: 0 none;
+}
+body .ui-slider.ui-slider-horizontal {
+  height: 5px;
+  margin: -15px 10px 15px 50px;
+}
+body .ui-slider.ui-slider-horizontal .ui-slider-handle {
+  top: 50%;
+  margin-top: -0.7145em;
+  margin-left: 0px;
+}
+body .ui-slider.ui-slider-vertical {
+  width: 0.286em;
+}
+body .ui-slider.ui-slider-vertical .ui-slider-handle {
+  left: 50%;
+  margin-left: -0.7145em;
+}
+body .ui-slider .ui-slider-handle {
+  height: 1.429em;
+  width: 1.429em;
+  background-color: #ffffff;
+  border: 5px solid #1d911d;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  -moz-transition: border-color 0.2s;
+  -o-transition: border-color 0.2s;
+  -webkit-transition: border-color 0.2s;
+  transition: border-color 0.2s;
+}
+body .ui-slider .ui-slider-range {
+  background-color: rgb(233, 77, 15);
+}
+body .ui-slider:not(.ui-state-disabled) .ui-slider-handle:hover {
+  background-color: 2px solid #7f7f7f;
+  border: 2px solid rgb(233, 77, 15);
+}
+
+/* ui-inputnumber */
+.ui-inputtext {
+  margin: 0px;
+  outline: medium none;
+  padding: 0px 0px 0px 3px;
+  font-weight: normal;
+}
+
+.ui-inputnumber {
+  display: inline-flex;
+}
+.ui-inputnumber-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.ui-inputnumber-buttons-stacked .ui-inputnumber-button .ui-button-text,
+.ui-inputnumber-buttons-horizontal .ui-inputnumber-button .ui-button-text {
+  display: none;
+}
+.ui-inputnumber-buttons-stacked .ui-inputnumber-button-up {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 0;
+}
+.ui-inputnumber-buttons-stacked .ui-inputnumber-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.ui-inputnumber-buttons-stacked .ui-inputnumber-button-down {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 0;
+}
+.ui-inputnumber-buttons-stacked .ui-inputnumber-button-group {
+  display: flex;
+  flex-direction: column;
+}
+.ui-inputnumber-buttons-stacked .ui-inputnumber-button-group .ui-inputnumber-button {
+  flex: 1 1 auto;
+}
+.ui-inputnumber-buttons-horizontal .ui-inputnumber-button-up {
+  order: 3;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.ui-inputnumber-buttons-horizontal .ui-inputnumber-input {
+  order: 2;
+  border-radius: 0;
+}
+.ui-inputnumber-buttons-horizontal .ui-inputnumber-button-down {
+  order: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.ui-inputnumber-buttons-vertical {
+  flex-direction: column;
+}
+.ui-inputnumber-buttons-vertical .ui-inputnumber-button-up.ui-button-icon-only {
+  order: 1;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 100%;
+}
+.ui-inputnumber-buttons-vertical .ui-inputnumber-input {
+  order: 2;
+  border-radius: 0;
+  text-align: center;
+}
+.ui-inputnumber-buttons-vertical .ui-inputnumber-button-down.ui-button-icon-only {
+  order: 3;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  width: 100%;
+}
+.ui-inputnumber-input {
+  flex: 1 1 auto;
+  background-color: aliceblue;
+  width: 40px;
+  border: 2px solid gray;
+  border-radius: 5px;
+}
+.ui-fluid .ui-inputnumber {
+  width: 100%;
+}
+.ui-fluid .ui-inputnumber .ui-inputnumber-input {
+  width: 1%;
+}
+.ui-fluid .ui-inputnumber-buttons-vertical .ui-inputnumber-input {
+  width: 100%;
+}
+
+/* ngb-timepicker */
+body ngb-timepicker {
+  font-size: 10px;
+}
+body .ngb-tp-input-container {
+  width: 55px;
+}
+body .ngb-tp-hour,
+.ngb-tp-meridian,
+.ngb-tp-minute,
+.ngb-tp-second {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+}
+body .ngb-tp-spacer {
+  width: 10px;
+  text-align: center;
+}
+body .btn-link {
+  font-weight: 400;
+  color: gray;
+  text-decoration: none;
+}
+
+/* ui-inputswitch */
+.ui-inputswitch {
+  position: relative;
+  display: inline-block;
+  width: 3em;
+  height: 1.75em;
+}
+
+.ui-inputswitch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border-radius: 30px;
+}
+.ui-inputswitch-slider:before {
+  position: absolute;
+  content: "";
+  height: 1.25em;
+  width: 1.25em;
+  left: 0.25em;
+  bottom: 0.25em;
+  border-radius: 50%;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.ui-inputswitch-checked .ui-inputswitch-slider:before {
+  -webkit-transform: translateX(1.25em);
+  -ms-transform: translateX(1.25em);
+  transform: translateX(1.25em);
+}
+.ui-inputswitch.ui-state-disabled .ui-inputswitch-slider,
+.ui-inputswitch-readonly .ui-inputswitch-slider {
+  cursor: default;
+}
