@@ -11,7 +11,8 @@ const ONE_DAY = 24 * 60 * 60 * 1000;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title: string;
+  title: 'Manual'|'Programado';
+  switchTitle: string;
   scheduled: boolean;
   ledBuiltin: string;
   pines: Array<Pin>;
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   alive: boolean;
 
   constructor(public esp8266Service: Esp8266Service) {
+    this.switchTitle = 'Manual';
     this.pines = new Array<Pin>();
     this.pin = new Pin();
     // Quitamos ms y truncamos la fecha
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           this.scheduled = response.scheduledMode == 1;
+          this.switchTitle = this.scheduled ? 'Programado' : 'Manual';
           this.getPines();
         },
         error => console.log(error)
@@ -74,6 +77,13 @@ export class AppComponent implements OnInit, OnDestroy {
       );
     this.getTime();
   }
+  public getTime() {
+    this.esp8266Service.getTime()
+      .subscribe(
+        response => this.esp8266Time = response.time * 1000,
+        error => console.log(error)
+      );
+  }
 
   private getTest() {
     this.esp8266Service.test()
@@ -82,17 +92,13 @@ export class AppComponent implements OnInit, OnDestroy {
         error => console.log(error)
       );
   }
-  private getTime() {
-    this.esp8266Service.getTime()
-      .subscribe(
-        response => this.esp8266Time = response.time * 1000,
-        error => console.log(error)
-      );
-  }
   private getScheduled() {
     this.esp8266Service.scheduledGet()
       .subscribe(
-        response => this.scheduled = response.scheduledMode == 1,
+        response => {
+          this.scheduled = response.scheduledMode == 1;
+          this.switchTitle = this.scheduled ? 'Programado' : 'Manual';
+        },
         error => console.log(error)
       );
   }

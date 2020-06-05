@@ -1,19 +1,16 @@
 <div class="app">
-  <div class="app__title">
+  <!-- <div class="app__title">
     <div class="app__title-logo">DOMOGARDEN</div>
-    <div class="app__title-time">
-      {{ this.esp8266Time | date:'HH:mm:ss':'+0000' }}
-    </div>
-  </div>
-  <div class="app__switch btn-group btn-group-toggle" ngbRadioGroup
+  </div> -->
+  <div class="app__switch" ngbRadioGroup
        name="radioBasic" [(ngModel)]="scheduled">
-    <label class="btn-primary" ngbButtonLabel >
-      <input type="radio" ngbButton [value]="false"
-             (change)="switchScheduled()">Manual
+    <label class="app__switch-label" ngbButtonLabel>
+      <input class="app__switch-label-button" type="button" [value]="switchTitle"
+             (click)="switchScheduled()">
     </label>
-    <label class="btn-primary" ngbButtonLabel >
-      <input type="radio" ngbButton [value]="true"
-             (change)="switchScheduled()">Programado
+    <label class="app__switch-label" ngbButtonLabel>
+      <input class="app__switch-label-button" type="button" [value]="this.esp8266Time | date:'HH:mm:ss':'+0000'"
+             (click)="getTime()">
     </label>
   </div>
   <div class="app__contain-pin" *ngFor="let item of pines">
@@ -39,12 +36,12 @@
       <div class="app__contain-pin-group2-switch">
       </div>
       <div class="app__contain-pin-group2-picker">
-        <ngb-timepicker [(ngModel)]="item.start0" [seconds]="true"
+        <ngb-timepicker [(ngModel)]="item.start1" [seconds]="true"
                         [disabled]="item.disabled">
         </ngb-timepicker>
-        <p-inputNumber [(ngModel)]="item.duration0" [min]="0" [max]="300">
+        <p-inputNumber [(ngModel)]="item.duration1" [min]="0" [max]="300">
         </p-inputNumber>
-        <p-slider [(ngModel)]="item.duration0" [disabled]="item.disabled"
+        <p-slider [(ngModel)]="item.duration1" [disabled]="item.disabled"
                   [min]="0" [max]="300" [animate]="true">
         </p-slider>
       </div>

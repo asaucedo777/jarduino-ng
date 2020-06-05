@@ -1,28 +1,17 @@
 .app {
-  background-color: blue;
-  &__title {
-    background-color: #ab6131;
-    display: flex;
-    justify-content: space-between;
-    &-logo {
-      background-color: greenyellow;
-      vertical-align: middle;
-      box-shadow: 5px 5px 5px 2px black;
-      margin: 5px;
-      border-radius: 5px;
-      padding: 5px;
-      height: 35px;
-    }
-    &-time {
-      background-color: #ab6131;
-    }
-  }
+  background-color: white;
   &__switch {
     background-color: darkgreen;
     border: 1px solid black;
     border-radius: 5px;
     margin: 5px;
     display: flex;
+    &-label {
+      background-color: orange;
+      &-button {
+        background-color: brown;
+      }
+    }
   }
   &__contain {
     background-color: green;
