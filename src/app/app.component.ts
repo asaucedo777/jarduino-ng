@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Esp8266Service } from './esp8266.service';
 import { Pin } from './pin.model';
+import { ToastService } from './toast.service';
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -11,7 +12,7 @@ const ONE_DAY = 24 * 60 * 60 * 1000;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title: 'Manual'|'Programado';
+  title: 'Manual' | 'Programado';
   switchTitle: string;
   scheduled: boolean;
   ledBuiltin: string;
@@ -21,7 +22,10 @@ export class AppComponent implements OnInit, OnDestroy {
   now: number;
   alive: boolean;
 
-  constructor(public esp8266Service: Esp8266Service) {
+  constructor(
+    public esp8266Service: Esp8266Service,
+    public toastService: ToastService,
+  ) {
     this.switchTitle = 'Manual';
     this.pines = new Array<Pin>();
     this.pin = new Pin();
@@ -47,6 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
         response => {
           this.scheduled = response.scheduledMode == 1;
           this.switchTitle = this.scheduled ? 'Programado' : 'Manual';
+          this.toastService.show('Modo de dispositivo ', this.switchTitle);
           this.getPines();
         },
         error => console.log(error)
@@ -55,25 +60,25 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   public switchLedBuiltin() {
     this.esp8266Service.ledBuiltinSwitch()
-    .subscribe(
-      response => this.ledBuiltin = response.ledBuiltin == '1' ? '0' : '1',
-      error => console.log(error)
+      .subscribe(
+        response => this.ledBuiltin = response.ledBuiltin == '1' ? '0' : '1',
+        error => console.log(error)
       );
     this.getTime();
   }
   public switch(pin: number) {
     this.esp8266Service.digitalPinSwitch(pin)
-    .subscribe(
-      response => this.getPines(),
-      error => console.log(error)
+      .subscribe(
+        response => this.getPines(),
+        error => console.log(error)
       );
     this.getTime();
   }
   public pinUpdate(pin: number) {
     this.esp8266Service.digitalPinPost(this.bind(this.pines[pin]))
-    .subscribe(
-      response => this.getPines(),
-      error => console.log(error)
+      .subscribe(
+        response => this.getPines(),
+        error => console.log(error)
       );
     this.getTime();
   }
@@ -88,8 +93,14 @@ export class AppComponent implements OnInit, OnDestroy {
   private getTest() {
     this.esp8266Service.test()
       .subscribe(
-        response => this.title = response.test,
-        error => console.log(error)
+        response => {
+          this.title = response.test;
+          this.toastService.show('Conectado con dispositivo ', 'Esp8266');
+        },
+        error => {
+          console.log(error);
+          this.toastService.show('Error de conexión ', error);
+        }
       );
   }
   private getScheduled() {
@@ -98,6 +109,7 @@ export class AppComponent implements OnInit, OnDestroy {
         response => {
           this.scheduled = response.scheduledMode == 1;
           this.switchTitle = this.scheduled ? 'Programado' : 'Manual';
+          this.toastService.show('Modo de dispositivo ', this.switchTitle);
         },
         error => console.log(error)
       );
@@ -113,15 +125,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.esp8266Service.digitalPins()
       .subscribe(
         response => this.setearPines(response.pines),
-        error => console.log(error)
-      );
+        error => {
+          console.log(error);
+        });
   }
   private setearPines(pines: Array<Pin>) {
     this.pines = [];
     if (pines) {
       pines.forEach((element: any) => {
         this.pines.push(new Pin(element))
-      })
+      });
     }
     console.log(this.pines);
   }

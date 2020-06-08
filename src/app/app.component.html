@@ -1,15 +1,16 @@
+<ngb-toast *ngFor="let toast of toastService.toasts" [header]="toast.header"
+           [autohide]="true" [delay]="toast.delay || 5000"
+           (hide)="toastService.remove(toast)">{{toast.body}}</ngb-toast>
 <div class="app">
-  <!-- <div class="app__title">
-    <div class="app__title-logo">DOMOGARDEN</div>
-  </div> -->
-  <div class="app__switch" ngbRadioGroup
-       name="radioBasic" [(ngModel)]="scheduled">
+  <div class="app__switch" ngbRadioGroup name="radioBasic"
+       [(ngModel)]="scheduled">
     <label class="app__switch-label" ngbButtonLabel>
-      <input class="app__switch-label-button" type="button" [value]="switchTitle"
-             (click)="switchScheduled()">
+      <input class="app__switch-label-button" type="button"
+             [value]="switchTitle" (click)="switchScheduled()">
     </label>
     <label class="app__switch-label" ngbButtonLabel>
-      <input class="app__switch-label-button" type="button" [value]="this.esp8266Time | date:'HH:mm:ss':'+0000'"
+      <input class="app__switch-label-button" type="button"
+             [value]="this.esp8266Time | date:'HH:mm:ss':'+0000'"
              (click)="getTime()">
     </label>
   </div>
@@ -28,7 +29,7 @@
         <p-inputNumber [(ngModel)]="item.duration0" [min]="0" [max]="300">
         </p-inputNumber>
         <p-slider [(ngModel)]="item.duration0" [disabled]="item.disabled"
-                  [min]="0" [max]="300" [animate]="true">
+                  [min]="0" [max]="300" [step]="30">
         </p-slider>
       </div>
     </div>
@@ -42,7 +43,7 @@
         <p-inputNumber [(ngModel)]="item.duration1" [min]="0" [max]="300">
         </p-inputNumber>
         <p-slider [(ngModel)]="item.duration1" [disabled]="item.disabled"
-                  [min]="0" [max]="300" [animate]="true">
+                  [min]="0" [max]="300" [step]="30">
         </p-slider>
       </div>
     </div>

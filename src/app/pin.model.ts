@@ -5,6 +5,8 @@ export interface IPin {
   disabled: number;
   start0: number;
   start1: number;
+  duration0: number;
+  duration1: number;
   result?: string;
 }
 
