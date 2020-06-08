@@ -69,7 +69,10 @@ export class AppComponent implements OnInit, OnDestroy {
   public switch(pin: number) {
     this.esp8266Service.digitalPinSwitch(pin)
       .subscribe(
-        response => this.getPines(),
+        response => {
+          this.getPines();
+          this.toastService.show('Switch pin D' + pin, 'ok');
+        },
         error => console.log(error)
       );
     this.getTime();
@@ -77,8 +80,13 @@ export class AppComponent implements OnInit, OnDestroy {
   public pinUpdate(pin: number) {
     this.esp8266Service.digitalPinPost(this.bind(this.pines[pin]))
       .subscribe(
-        response => this.getPines(),
-        error => console.log(error)
+        response => {
+          this.getPines();
+          this.toastService.show('Actualización de pin D' + pin, 'Pin actualizado');
+        },
+        error => {
+          console.log(error);
+        }
       );
     this.getTime();
   }
